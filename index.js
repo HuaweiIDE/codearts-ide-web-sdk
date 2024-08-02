@@ -34,6 +34,10 @@ export function openFile(file) {
     postMessage(message);
 }
 
+export function dispose() {
+    iframe.parentNode.removeChild(iframe);
+}
+
 function postMessage(message) {
     iframe.contentWindow.postMessage(message, '*');
 }
