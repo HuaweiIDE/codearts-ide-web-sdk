@@ -6,10 +6,9 @@ iframe.height = '1px';
 iframe.style.opacity = 0;
 iframe.style.zIndex = -1;
 
-export function preload(id) {
+export function preload() {
+    document.body.appendChild(iframe);
     return new Promise((resolve) => {
-        var targetNode = document.getElementById(id);
-        targetNode.appendChild(iframe);
         iframe.addEventListener('load', () => {
             resolve();
         });
@@ -17,7 +16,9 @@ export function preload(id) {
 }
 
 // style: { width: string, height: string }
-export function show(style) {
+export function show(id, style) {
+    var targetNode = document.getElementById(id);
+    targetNode.appendChild(iframe);
     const {width, height} = style;
     iframe.width = width; 
     iframe.height = height; 
