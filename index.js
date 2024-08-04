@@ -1,24 +1,27 @@
 var iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = 'https://res.hc-cdn.com/codearts-core-web-static/1.0.9/resources/server/gitcode.html';
+iframe.src = 'https://res.hc-cdn.com/codearts-core-web-static/1.0.11/resources/server/gitcode.html';
 iframe.width = '1px';
 iframe.height = '1px';
 iframe.style.opacity = 0;
 iframe.style.zIndex = -1;
 
-export function preload() {
-    document.body.appendChild(iframe);
+export function preload(id) {
+    var targetNode = document.getElementById(id);
+    targetNode.appendChild(iframe);
     return new Promise((resolve) => {
-        iframe.addEventListener('load', () => {
-            resolve();
+        window.addEventListener('message', function(event) {
+			console.log('-gitcode--receive message---', event.data);
+            if (event.data === 'ide-loaded') {
+                console.log('====Message received from iframe:', event.data);
+                resolve();
+            }
         });
     });
 }
 
 // style: { width: string, height: string }
-export function show(id, style) {
-    var targetNode = document.getElementById(id);
-    targetNode.appendChild(iframe);
+export function show(style) {
     const {width, height} = style;
     iframe.width = width; 
     iframe.height = height; 
