@@ -1,6 +1,6 @@
 var iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = 'https://res.hc-cdn.com/codearts-core-web-static/1.0.11/resources/server/gitcode.html';
+iframe.src = 'https://res.hc-cdn.com/codearts-core-web-static/1.0.13/resources/server/gitcode.html';
 iframe.width = '1px';
 iframe.height = '1px';
 iframe.style.opacity = 0;
