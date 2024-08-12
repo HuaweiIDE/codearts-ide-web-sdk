@@ -1,3 +1,5 @@
+import { EventEmitter } from './util'
+
 const hcOrigin = 'https://res.hc-cdn.com';
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
@@ -6,6 +8,9 @@ iframe.width = '1px';
 iframe.height = '1px';
 iframe.style.opacity = 0;
 iframe.style.zIndex = -1;
+
+const ON_DID_CHANGE = 'onDidChange';
+const eventEmitter = new EventEmitter();
 
 function ideLoading() {
     return new Promise((resolve) => {
@@ -40,6 +45,16 @@ function ideContent() {
     });
 }
 
+function onDidRecieveMessage(event) {
+    const { type, data } = event.data;
+    if (event.origin !== hcOrigin) {
+        return;
+    }
+    if (type === 'ide-on-did-change-file') {
+        eventEmitter.emit(ON_DID_CHANGE, data);
+    }
+}
+
 export function preload() {
     document.body.appendChild(iframe);
     return ideLoading();
@@ -49,9 +64,9 @@ export function preload() {
 export function show(id, style) {
     var targetNode = document.getElementById(id);
     targetNode.appendChild(iframe);
-    const {width, height} = style;
-    iframe.width = width; 
-    iframe.height = height; 
+    const { width, height } = style;
+    iframe.width = width;
+    iframe.height = height;
     iframe.style.opacity = 1;
     iframe.style.zIndex = 1;
     return ideLoading();
@@ -67,6 +82,8 @@ export function openFile(file) {
 }
 
 export function dispose() {
+    window.removeEventListener('message', onDidRecieveMessage);
+    eventEmitter.clear();
     iframe.remove();
 }
 
@@ -96,4 +113,18 @@ export function setToken(token) {
 
 function postMessage(message) {
     iframe.contentWindow.postMessage(message, hcOrigin);
+}
+
+let isRegisteredListener = false;
+export function onDidChange(listener) {
+    if (!isRegisteredListener) {
+        window.addEventListener('message', onDidRecieveMessage);
+        isRegisteredListener = true;
+    }
+    eventEmitter.on(ON_DID_CHANGE, listener);
+    return {
+        dispose: () => {
+            eventEmitter.off(ON_DID_CHANGE, listener);
+        }
+    }
 }
