@@ -34,8 +34,8 @@
 7. 获取当前文件最新内容，返回 Promise：  
    `await ide.getContent();`
 
-8. 设置 Token：  
-   `ide.setToken();`
+8. 设置 DomainId 及 UserId：  
+   `ide.setUserId(domainId: string, userId: string);`
 
 9. 监听当前文件变化
 
