@@ -3,7 +3,7 @@ import { EventEmitter } from './util'
 const hcOrigin = 'https://res.hc-cdn.com';
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = hcOrigin + '/codearts-core-web-static/1.0.18/resources/server/gitcode.html';
+iframe.src = hcOrigin + '/codearts-core-web-static/1.0.19/resources/server/gitcode.html';
 iframe.width = '1px';
 iframe.height = '1px';
 iframe.style.opacity = 0;
