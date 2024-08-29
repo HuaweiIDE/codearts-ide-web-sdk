@@ -45,5 +45,9 @@
    event.dispose();
    ```
 
-10. 销毁 IDE  
+10. 设置图片、文件前缀：  
+   `ide.setImgPrefix(prefix: string);`  
+   `ide.setFilePrefix(prefix: string);`
+
+11. 销毁 IDE  
     `ide.dispose();`
