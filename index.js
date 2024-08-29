@@ -3,11 +3,7 @@ import { EventEmitter } from './util'
 const hcOrigin = 'https://res.hc-cdn.com';
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = hcOrigin + '/codearts-core-web-static/1.0.23/resources/server/gitcode.html';
-iframe.width = '1px';
-iframe.height = '1px';
-iframe.style.opacity = 0;
-iframe.style.zIndex = -1;
+iframe.src = hcOrigin + '/codearts-core-web-static/1.0.25/resources/server/gitcode.html';
 
 const ON_DID_CHANGE = 'onDidChange';
 const eventEmitter = new EventEmitter();
@@ -56,6 +52,10 @@ function onDidRecieveMessage(event) {
 }
 
 export function preload() {
+    iframe.width = '1px';
+    iframe.height = '1px';
+    iframe.style.opacity = 0;
+    iframe.style.zIndex = -1;
     document.body.appendChild(iframe);
     return ideLoading();
 }
