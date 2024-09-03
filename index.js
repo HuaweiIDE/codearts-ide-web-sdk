@@ -1,9 +1,9 @@
 import { EventEmitter } from './util'
 
-const hcOrigin = 'https://res.hc-cdn.com';
+const hcOrigin = 'https://codeartside.obs.cn-north-4.myhuaweicloud.com';
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = hcOrigin + '/codearts-core-web-static/1.0.27/resources/server/gitcode.html';
+iframe.src = hcOrigin + '/web-static/1.0.28/resources/server/gitcode.html';
 
 const ON_DID_CHANGE = 'onDidChange';
 const eventEmitter = new EventEmitter();
