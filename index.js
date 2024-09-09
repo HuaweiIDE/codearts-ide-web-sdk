@@ -11,7 +11,6 @@ const eventEmitter = new EventEmitter();
 function ideLoading() {
     return new Promise((resolve) => {
         function handleMessage(event) {
-            console.log('-gitcode--receive message---', event.data);
             if (event.origin !== hcOrigin) {
                 return;
             }
@@ -28,7 +27,6 @@ function ideContent() {
     return new Promise((resolve) => {
         function handleMessage(event) {
             const { type, data } = event.data;
-            console.log('-gitcode--receive message---', event.data);
             if (event.origin !== hcOrigin) {
                 return;
             }
@@ -149,6 +147,8 @@ export function onDidChange(listener) {
     return {
         dispose: () => {
             eventEmitter.off(ON_DID_CHANGE, listener);
+            window.removeEventListener('message', onDidRecieveMessage);
+            isRegisteredListener = false;
         }
     }
 }
