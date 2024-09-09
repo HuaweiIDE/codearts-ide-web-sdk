@@ -49,5 +49,8 @@
    `ide.setImgPrefix(prefix: string);`  
    `ide.setFilePrefix(prefix: string);`
 
-11. 销毁 IDE  
+11. 设置Mardown文件中iframe的source:   
+    `ide.setIframeOrigin(origin: string);`
+
+12. 销毁 IDE  
     `ide.dispose();`

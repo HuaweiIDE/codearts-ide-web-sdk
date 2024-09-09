@@ -3,7 +3,7 @@ import { EventEmitter } from './util'
 const hcOrigin = 'https://res.hc-cdn.com';
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = hcOrigin + '/codearts-core-web-static/1.0.27/resources/server/gitcode.html';
+iframe.src = hcOrigin + '/codearts-core-web-static/1.0.28/resources/server/gitcode.html';
 
 const ON_DID_CHANGE = 'onDidChange';
 const eventEmitter = new EventEmitter();
@@ -123,6 +123,14 @@ export function setFilePrefix(prefix) {
     const message = {
         type: 'setFilePrefix',
         data: prefix
+    };
+    postMessage(message);
+}
+
+export function setIframeOrigin(origin) {
+    const message = {
+        type: 'setIframeOrigin',
+        data: origin
     };
     postMessage(message);
 }
