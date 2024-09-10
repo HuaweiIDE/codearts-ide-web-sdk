@@ -1,6 +1,6 @@
 import { EventEmitter } from './util'
 
-const hcOrigin = 'https://res.hc-cdn.com';
+const hcOrigin = 'https://idea.gitcode.net';
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
 iframe.src = hcOrigin + '/codearts-core-web-static/1.0.30/resources/server/gitcode.html';
