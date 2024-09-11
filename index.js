@@ -3,7 +3,7 @@ import { EventEmitter } from './util'
 const hcOrigin = 'https://idea.gitcode.net';
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = hcOrigin + '/codearts-core-web-static/1.0.33/resources/server/gitcode.html';
+iframe.src = hcOrigin + '/codearts-core-web-static/1.0.34/resources/server/gitcode.html';
 
 const ON_DID_CHANGE = 'onDidChange';
 const eventEmitter = new EventEmitter();
