@@ -1,9 +1,14 @@
 import { EventEmitter } from './util'
 
-const hcOrigin = 'https://idea.gitcode.com';
+let hcOrigin = '';
+if (window.location.origin.endsWith('.net')) {
+    hcOrigin = 'https://idea.gitcode.net';
+} else {
+    hcOrigin = 'https://idea.gitcode.com';
+}
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = hcOrigin + '/codearts-core-web-static/1.0.37/resources/server/gitcode.html';
+iframe.src = hcOrigin + '/codearts-core-web-static/1.0.38/resources/server/gitcode.html';
 
 const ON_DID_CHANGE = 'onDidChange';
 const eventEmitter = new EventEmitter();
@@ -129,6 +134,14 @@ export function setIframeOrigin(origin) {
     const message = {
         type: 'setIframeOrigin',
         data: origin
+    };
+    postMessage(message);
+}
+
+export function setColorTheme(theme) {
+    const message = {
+        type: 'setColorTheme',
+        data: theme
     };
     postMessage(message);
 }

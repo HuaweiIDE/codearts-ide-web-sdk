@@ -50,7 +50,16 @@
    `ide.setFilePrefix(prefix: string);`
 
 11. 设置Mardown文件中iframe的source:   
-    `ide.setIframeOrigin(origin: string);`
+   `ide.setIframeOrigin(origin: string);`
 
-12. 销毁 IDE  
+12. 设置深色/浅色主题:   
+   `ide.setColorTheme(theme: string);`
+   ```
+   // 深色
+   ide.setColorTheme('dark');
+   // 浅色
+   ide.setColorTheme('light');
+   ```
+
+13. 销毁 IDE  
     `ide.dispose();`
