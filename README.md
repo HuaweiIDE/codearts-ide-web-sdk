@@ -27,6 +27,7 @@
         name: 'README.md'
     });
    ```
+   如果需要传入pdf文件，content需要设置为空，path为pdf资源链接，name为pdf文件名。
 
 6. 设置文件是否为预览(只读)状态  
    `ide.setPreview(preview: boolean)`
