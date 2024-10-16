@@ -8,7 +8,7 @@ if (window.location.origin.endsWith('.net')) {
 }
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = hcOrigin + '/codearts-core-web-static/1.0.40/resources/server/gitcode.html';
+iframe.src = hcOrigin + '/codearts-core-web-static/1.0.42/resources/server/gitcode.html';
 
 const ON_DID_CHANGE = 'onDidChange';
 const eventEmitter = new EventEmitter();
