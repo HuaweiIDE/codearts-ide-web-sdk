@@ -11,6 +11,7 @@ iframe.id = 'codeartside';
 iframe.src = hcOrigin + '/codearts-core-web-static/1.0.54/resources/server/gitcode.html';
 
 const ON_DID_CHANGE = 'onDidChange';
+const ON_DID_CLICK_MD_LINK = 'onDidClickMdLink';
 const eventEmitter = new EventEmitter();
 
 function ideLoading() {
@@ -51,6 +52,9 @@ function onDidRecieveMessage(event) {
     }
     if (type === 'ide-on-did-change-file') {
         eventEmitter.emit(ON_DID_CHANGE, data);
+    }
+    if(type === 'ide-on-did-click-md-link') {
+        eventEmitter.emit(ON_DID_CLICK_MD_LINK, data);
     }
 }
 
