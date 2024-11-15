@@ -28,3 +28,16 @@ export class EventEmitter {
         this.events = {};
     }
 }
+
+export function getOS() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    if (userAgent.indexOf('windows') !== -1) {
+        return 'win';
+    } else if (userAgent.indexOf('mac') !== -1) {
+        return 'darwin';
+    } else if (userAgent.indexOf('linux') !== -1) {
+        return 'linux';
+    } else {
+        return 'unknown';
+    }
+}

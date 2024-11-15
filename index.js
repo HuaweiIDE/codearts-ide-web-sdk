@@ -1,4 +1,4 @@
-import { EventEmitter } from './util'
+import { EventEmitter, getOS } from './util'
 
 let hcOrigin = '';
 if (window.location.origin.endsWith('.net')) {
@@ -8,8 +8,9 @@ if (window.location.origin.endsWith('.net')) {
 }
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = hcOrigin + '/codearts-core-web-static/1.0.55/resources/server/gitcode.html';
+iframe.src = hcOrigin + '/codearts-core-web-static/1.0.57/resources/server/gitcode.html';
 
+const OS = getOS();
 const ON_DID_CHANGE = 'onDidChange';
 const eventEmitter = new EventEmitter();
 
@@ -65,13 +66,13 @@ export function preload() {
 
 // style: { width: string, height: string }
 export function show(id, style) {
-    var targetNode = document.getElementById(id);
-    targetNode.appendChild(iframe);
     const { width, height } = style;
     iframe.width = width;
     iframe.height = height;
     iframe.style.opacity = 1;
     iframe.style.zIndex = 1;
+    var targetNode = document.getElementById(id);
+    targetNode.appendChild(iframe);
     return ideLoading();
 }
 
@@ -107,6 +108,26 @@ export function getContent() {
 }
 
 export function setUserId(domainId, userId) {
+    const url = 'https://cloudide.cn-north-4.myhuaweicloud.com/v1/ca/behavior/codearts-record';
+    const body = JSON.stringify({
+        'scope': 'gitcode-repo',
+        'action': 'setUserId',
+        'data': null,
+        'platform': 'websdk.3.0.0',
+        'machine_code': 'codearts0machinecodearts0machinecodearts0machinecodearts0machine',
+        'scenario': 'WEBSDK',
+        'os': OS,
+        'arch': 'webide',
+        'domain_id': domainId,
+        'user_id': userId,
+        'identifier': 'ide'
+    });
+    fetch(url, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Content-Length': body.length },
+        body,
+    });
+
     const message = {
         type: 'setUserId',
         data: { domainId, userId }
