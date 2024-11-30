@@ -55,12 +55,20 @@
 
 12. 设置深色/浅色主题:   
    `ide.setColorTheme(theme: string);`
-   ```
-   // 深色
-   ide.setColorTheme('dark');
-   // 浅色
-   ide.setColorTheme('light');
-   ```
+      ```
+      // 深色
+      ide.setColorTheme('dark');
+      // 浅色
+      ide.setColorTheme('light');
+      ```
 
 13. 销毁 IDE  
     `ide.dispose();`
+
+14. 监听点击链接时的锚点变化
+
+      ```
+      const event = ide.onDidClickMdLink(listener: (content: string) => {});
+      // 销毁监听
+      event.dispose();
+      ```
