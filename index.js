@@ -8,10 +8,11 @@ if (window.location.origin.endsWith('.net')) {
 }
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = hcOrigin + '/codearts-core-web-static/1.0.74/resources/server/gitcode.html';
+iframe.src = hcOrigin + '/codearts-core-web-static/1.0.75/resources/server/gitcode.html';
 
 const OS = getOS();
 const ON_DID_CHANGE = 'onDidChange';
+const ON_DID_SEND_CODE = 'onDidSendCode';
 const eventEmitter = new EventEmitter();
 
 function ideLoading() {
@@ -52,6 +53,9 @@ function onDidRecieveMessage(event) {
     }
     if (type === 'ide-on-did-change-file') {
         eventEmitter.emit(ON_DID_CHANGE, data);
+    }
+    if (type === 'ide-on-did-send-code') {
+        eventEmitter.emit(ON_DID_SEND_CODE, data);
     }
 }
 
@@ -167,6 +171,22 @@ export function setColorTheme(theme) {
     postMessage(message);
 }
 
+export function setEditorFontSize(fontSize) {
+    const message = {
+        type: 'setEditorFontSize',
+        data: fontSize
+    };
+    postMessage(message);
+}
+
+export function registerCodeOperation(options) {
+    const message = {
+        type: 'registerCodeOperation',
+        data: options
+    };
+    postMessage(message);
+}
+
 function postMessage(message) {
     iframe.contentWindow.postMessage(message, hcOrigin);
 }
@@ -183,6 +203,22 @@ export function onDidChange(listener) {
             eventEmitter.off(ON_DID_CHANGE, listener);
             window.removeEventListener('message', onDidRecieveMessage);
             isRegisteredListener = false;
+        }
+    }
+}
+
+let isRegisteredSendCodeListener = false;
+export function onDidSendCode(listener) {
+    if (!isRegisteredSendCodeListener) {
+        window.addEventListener('message', onDidRecieveMessage);
+        isRegisteredSendCodeListener = true;
+    }
+    eventEmitter.on(ON_DID_SEND_CODE, listener);
+    return {
+        dispose: () => {
+            eventEmitter.off(ON_DID_SEND_CODE, listener);
+            window.removeEventListener('message', onDidRecieveMessage);
+            isRegisteredSendCodeListener = false;
         }
     }
 }
