@@ -8,11 +8,12 @@ if (window.location.origin.endsWith('.net')) {
 }
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = hcOrigin + '/codearts-core-web-static/1.0.77/resources/server/gitcode.html';
+iframe.src = hcOrigin + '/codearts-core-web-static/1.0.78/resources/server/gitcode.html';
 
 const OS = getOS();
 const ON_DID_CHANGE = 'onDidChange';
 const ON_DID_SEND_CODE = 'onDidSendCode';
+const ON_DID_CLICK_LINK = 'onDidClickLink';
 const eventEmitter = new EventEmitter();
 
 function ideLoading() {
@@ -56,6 +57,9 @@ function onDidRecieveMessage(event) {
     }
     if (type === 'ide-on-did-send-code') {
         eventEmitter.emit(ON_DID_SEND_CODE, data);
+    }
+    if (type === 'ide-on-did-click-link') {
+        eventEmitter.emit(ON_DID_CLICK_LINK, data);
     }
 }
 
@@ -187,6 +191,14 @@ export function registerCodeOperation(options) {
     postMessage(message);
 }
 
+export function setLinkTransitSite(url) {
+    const message = {
+        type: 'setLinkTransitSite',
+        data: url
+    };
+    postMessage(message);
+}
+
 function postMessage(message) {
     iframe.contentWindow.postMessage(message, hcOrigin);
 }
@@ -219,6 +231,22 @@ export function onDidSendCode(listener) {
             eventEmitter.off(ON_DID_SEND_CODE, listener);
             window.removeEventListener('message', onDidRecieveMessage);
             isRegisteredSendCodeListener = false;
+        }
+    }
+}
+
+let isRegisteredClickLinkListener = false;
+export function onDidClickLink(listener) {
+    if (!isRegisteredClickLinkListener) {
+        window.addEventListener('message', onDidRecieveMessage);
+        isRegisteredClickLinkListener = true;
+    }
+    eventEmitter.on(ON_DID_CLICK_LINK, listener);
+    return {
+        dispose: () => {
+            eventEmitter.off(ON_DID_CLICK_LINK, listener);
+            window.removeEventListener('message', onDidRecieveMessage);
+            isRegisteredClickLinkListener = false;
         }
     }
 }

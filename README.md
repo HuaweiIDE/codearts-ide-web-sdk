@@ -127,5 +127,16 @@
    event.dispose();
    ```
 
-16. 销毁 IDE  
+16. 设置编辑器点击链接后进入的中转网页:   
+   `ide.setLinkTransitSite(url: string);`
+
+17. 监听当前点击以http和https开头的链接
+
+   ```
+   const event = ide.onDidClickLink(listener: (content: string) => {});
+   // 销毁监听
+   event.dispose();
+   ```
+
+18. 销毁 IDE  
     `ide.dispose();`
