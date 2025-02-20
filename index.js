@@ -8,7 +8,7 @@ if (window.location.origin.endsWith('.net')) {
 }
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = hcOrigin + '/codearts-core-web-static/1.0.78/resources/server/gitcode.html';
+iframe.src = hcOrigin + '/codearts-core-web-static/1.0.79/resources/server/gitcode.html';
 
 const OS = getOS();
 const ON_DID_CHANGE = 'onDidChange';
@@ -191,10 +191,10 @@ export function registerCodeOperation(options) {
     postMessage(message);
 }
 
-export function setLinkTransitSite(url) {
+export function blockClickedLink(block) {
     const message = {
-        type: 'setLinkTransitSite',
-        data: url
+        type: 'blockClickedLink',
+        data: block
     };
     postMessage(message);
 }
