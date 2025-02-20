@@ -127,8 +127,8 @@
    event.dispose();
    ```
 
-16. 设置编辑器点击链接后进入的中转网页:   
-   `ide.setLinkTransitSite(url: string);`
+16. 设置编辑器点击链接后是否拦截进入网页:   
+   `ide.blockClickedLink(block: boolean);`
 
 17. 监听当前点击以http和https开头的链接
 
