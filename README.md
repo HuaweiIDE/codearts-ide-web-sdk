@@ -138,5 +138,29 @@
    event.dispose();
    ```
 
-18. 销毁 IDE  
+18. 设置代码高亮行(若只需高亮一行，则将IHightlightConfig.start与IHightlightConfig.end设置为同行)
+   `ide.setHighlightLineNumber(config: IHightlightConfig);`
+   ```typescript
+   export interface IHightlightConfig {
+      /**
+       * Controls the starting line number to highlight.
+       */
+		start: number;
+
+      /**
+       * Controls the ending line number to highlight.
+       */
+      end: number
+   };
+   ```
+
+19. 监听当前点击行号后高亮的区间
+
+   ```
+   const event = ide.onDidClickLineNumber(listener: (content: IHightlightConfig) => {});
+   // 销毁监听
+   event.dispose();
+   ```
+
+20. 销毁 IDE  
     `ide.dispose();`
