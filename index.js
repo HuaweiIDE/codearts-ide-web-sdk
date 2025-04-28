@@ -8,12 +8,13 @@ if (window.location.origin.endsWith('.net')) {
 }
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = hcOrigin + '/codearts-core-web-static/1.0.83/resources/server/gitcode.html';
+iframe.src = hcOrigin + '/codearts-core-web-static/1.0.86/resources/server/gitcode.html';
 
 const OS = getOS();
 const ON_DID_CHANGE = 'onDidChange';
 const ON_DID_SEND_CODE = 'onDidSendCode';
 const ON_DID_CLICK_LINK = 'onDidClickLink';
+const ON_DID_CLICK_LINE_NUMBER = 'onDidClickLineNumber';
 const eventEmitter = new EventEmitter();
 
 function ideLoading() {
@@ -60,6 +61,9 @@ function onDidRecieveMessage(event) {
     }
     if (type === 'ide-on-did-click-link') {
         eventEmitter.emit(ON_DID_CLICK_LINK, data);
+    }
+    if (type === 'ide-on-did-click-line-number') {
+        eventEmitter.emit(ON_DID_CLICK_LINE_NUMBER, data);
     }
 }
 
@@ -199,6 +203,14 @@ export function blockClickedLink(block) {
     postMessage(message);
 }
 
+export function setHighlightLineNumber(config) {
+    const message = {
+        type: 'setHighlightLineNumber',
+        data: config
+    };
+    postMessage(message);
+}
+
 function postMessage(message) {
     iframe.contentWindow.postMessage(message, hcOrigin);
 }
@@ -247,6 +259,22 @@ export function onDidClickLink(listener) {
             eventEmitter.off(ON_DID_CLICK_LINK, listener);
             window.removeEventListener('message', onDidRecieveMessage);
             isRegisteredClickLinkListener = false;
+        }
+    }
+}
+
+let isRegisteredClickLineNumberListener = false;
+export function onDidClickLineNumber(listener) {
+    if (!isRegisteredClickLineNumberListener) {
+        window.addEventListener('message', onDidRecieveMessage);
+        isRegisteredClickLineNumberListener = true;
+    }
+    eventEmitter.on(ON_DID_CLICK_LINE_NUMBER, listener);
+    return {
+        dispose: () => {
+            eventEmitter.off(ON_DID_CLICK_LINE_NUMBER, listener);
+            window.removeEventListener('message', onDidRecieveMessage);
+            isRegisteredClickLineNumberListener = false;
         }
     }
 }
