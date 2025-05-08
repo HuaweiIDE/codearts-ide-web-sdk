@@ -162,5 +162,8 @@
    event.dispose();
    ```
 
-20. 销毁 IDE  
-    `ide.dispose();`
+20. 开启Markdown文件的侧边预览功能，默认开启
+   `ide.enableMarkdownPreview(isEnable: boolean);`
+
+21. 销毁 IDE  
+   `ide.dispose();`
