@@ -8,7 +8,7 @@ if (window.location.origin.endsWith('.net')) {
 }
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = hcOrigin + '/codearts-core-web-static/1.0.87/resources/server/gitcode.html';
+iframe.src = hcOrigin + '/codearts-core-web-static/1.0.88/resources/server/gitcode.html';
 
 const OS = getOS();
 const ON_DID_CHANGE = 'onDidChange';
@@ -207,6 +207,14 @@ export function setHighlightLineNumber(config) {
     const message = {
         type: 'setHighlightLineNumber',
         data: config
+    };
+    postMessage(message);
+}
+
+export function enableMarkdownPreview(isEnable) {
+    const message = {
+        type: 'enableMarkdownPreview',
+        data: isEnable
     };
     postMessage(message);
 }
