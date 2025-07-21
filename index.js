@@ -1,7 +1,7 @@
 import { EventEmitter, getOS } from './util'
 
 let hcOrigin = '';
-const OriginSuffix = window.location.origin.match(/(\.[a-zA-Z0-9.-]+)$/);
+const OriginSuffix = window.location.origin.match(/(?:\w+\.)*?gitcode((?:\.\w+)+)$/);
 if (OriginSuffix) {
     const suffix = OriginSuffix[1];
     hcOrigin = `https://idea.gitcode${suffix}`;
