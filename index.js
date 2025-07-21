@@ -1,10 +1,10 @@
 import { EventEmitter, getOS } from './util'
 
 let hcOrigin = '';
-if (window.location.origin.endsWith('.net')) {
-    hcOrigin = 'https://idea.gitcode.net';
-} else {
-    hcOrigin = 'https://idea.gitcode.com';
+const OriginSuffix = window.location.origin.match(/(\.[a-zA-Z0-9.-]+)$/);
+if (OriginSuffix) {
+    const suffix = OriginSuffix[1];
+    hcOrigin = `https://idea.gitcode${suffix}`;
 }
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
