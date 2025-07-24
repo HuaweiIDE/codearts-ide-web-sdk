@@ -4,7 +4,9 @@ let hcOrigin = '';
 const OriginSuffix = window.location.origin.match(/(?:\w+\.)*?gitcode((?:\.\w+)+)$/);
 if (OriginSuffix) {
     const suffix = OriginSuffix[1];
-    hcOrigin = `https://idea.gitcode${suffix}`;
+    hcOrigin = `https://idea.gitcode${suffix}`; // Adapter for gitcode multiple domains
+} else {
+    hcOrigin = 'https://idea.gitcode.com'; // Adapter for cangjie playground
 }
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
