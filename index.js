@@ -1,16 +1,20 @@
 import { EventEmitter, getOS } from './util'
 
 let hcOrigin = '';
-const OriginSuffix = window.location.origin.match(/(?:\w+\.)*?gitcode((?:\.\w+)+)$/);
-if (OriginSuffix) {
-    const suffix = OriginSuffix[1];
+const gitcodeOriginSuffix = window.location.origin.match(/(?:\w+\.)*?gitcode((?:\.\w+)+)$/);
+const atomgitOriginSuffix = window.location.origin.match(/(?:\w+\.)*?atomgit((?:\.\w+)+)$/);
+if (gitcodeOriginSuffix) {
+    const suffix = gitcodeOriginSuffix[1];
     hcOrigin = `https://idea.gitcode${suffix}`; // Adapter for gitcode multiple domains
+} else if(atomgitOriginSuffix) {
+    const suffix = atomgitOriginSuffix[1];
+    hcOrigin = `https://idea.atomgit${suffix}`; // Adapter for atomgit multiple domains
 } else {
     hcOrigin = 'https://idea.gitcode.com'; // Adapter for cangjie playground
 }
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = hcOrigin + '/codearts-core-web-static/1.0.98/resources/server/gitcode.html';
+iframe.src = hcOrigin + '/codearts-core-web-static/1.0.99/resources/server/gitcode.html';
 
 const OS = getOS();
 const ON_DID_CHANGE = 'onDidChange';
