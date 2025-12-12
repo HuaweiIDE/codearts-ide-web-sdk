@@ -6,7 +6,7 @@ const atomgitOriginSuffix = window.location.origin.match(/(?:\w+\.)*?atomgit((?:
 if (gitcodeOriginSuffix) {
     const suffix = gitcodeOriginSuffix[1];
     hcOrigin = `https://idea.gitcode${suffix}`; // Adapter for gitcode multiple domains
-} else if(atomgitOriginSuffix) {
+} else if (atomgitOriginSuffix) {
     const suffix = atomgitOriginSuffix[1];
     hcOrigin = `https://idea.atomgit${suffix}`; // Adapter for atomgit multiple domains
 } else {
@@ -14,13 +14,18 @@ if (gitcodeOriginSuffix) {
 }
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = hcOrigin + '/codearts-core-web-static/1.0.101/resources/server/gitcode.html';
+iframe.src = hcOrigin + '/codearts-core-web-static/1.0.102/resources/server/gitcode.html';
 
 const OS = getOS();
 const ON_DID_CHANGE = 'onDidChange';
 const ON_DID_SEND_CODE = 'onDidSendCode';
 const ON_DID_CLICK_LINK = 'onDidClickLink';
 const ON_DID_CLICK_LINE_NUMBER = 'onDidClickLineNumber';
+
+// Used to get the location hash, different from the standard W3C fragment text flag '#:~:text=',
+// which will be handled by the browser and removed then. We cannot get the location hash if use '#:~:text='.
+export const CUSTOM_W3C_FRAGMENT_TEXT_FLAG = '#:~text=';
+
 const eventEmitter = new EventEmitter();
 
 function ideLoading() {
@@ -30,6 +35,12 @@ function ideLoading() {
                 return;
             }
             if (event.data === 'ide-loaded') {
+                // Post location message to ide.
+                postMessage({
+                    type: 'documentLink',
+                    data: `${window.location.origin}${window.location.pathname}`
+                });
+
                 resolve();
                 window.removeEventListener('message', handleMessage);
             }
@@ -94,11 +105,11 @@ export function show(id, style) {
     return ideLoading();
 }
 
-// file: { content: string, path: string, name: string }
+// file: { content: string, path: string, name: string, customW3cFragmentTextHash?: string }
 export function openFile(file) {
     const message = {
         type: 'openFile',
-        data: file
+        data: { ...file, customW3cFragmentTextHash: window.location.hash.startsWith(CUSTOM_W3C_FRAGMENT_TEXT_FLAG) ? window.location.hash : undefined }
     };
     postMessage(message);
 }
