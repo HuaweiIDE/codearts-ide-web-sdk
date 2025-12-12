@@ -24,7 +24,7 @@ const ON_DID_CLICK_LINE_NUMBER = 'onDidClickLineNumber';
 
 // Used to get the location hash, different from the standard W3C fragment text flag '#:~:text=',
 // which will be handled by the browser and removed then. We cannot get the location hash if use '#:~:text='.
-export const CUSTOM_W3C_FRAGMENT_TEXT_FLAG = '#:~text=';
+const CUSTOM_W3C_FRAGMENT_TEXT_FLAG = '#:~text=';
 
 const eventEmitter = new EventEmitter();
 
@@ -232,6 +232,14 @@ export function enableMarkdownPreview(isEnable) {
     const message = {
         type: 'enableMarkdownPreview',
         data: isEnable
+    };
+    postMessage(message);
+}
+
+export function setEditorWordWrap(wordWrap) {
+    const message = {
+        type: 'setEditorWordWrap',
+        data: wordWrap
     };
     postMessage(message);
 }
