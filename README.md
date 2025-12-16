@@ -167,3 +167,6 @@
 
 21. 销毁 IDE  
    `ide.dispose();`
+
+22. 设置编辑区文本是否自动换行，默认关闭
+   `ide.setEditorWordWrap(wordWrap: boolean)`
