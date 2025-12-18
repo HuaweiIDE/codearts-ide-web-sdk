@@ -35,12 +35,6 @@ function ideLoading() {
                 return;
             }
             if (event.data === 'ide-loaded') {
-                // Post location message to ide.
-                postMessage({
-                    type: 'documentLink',
-                    data: `${window.location.origin}${window.location.pathname}`
-                });
-
                 resolve();
                 window.removeEventListener('message', handleMessage);
             }
@@ -84,6 +78,14 @@ function onDidRecieveMessage(event) {
     }
 }
 
+function setDocumentLink() {
+    // Post location message to ide.
+    postMessage({
+        type: 'documentLink',
+        data: `${window.location.origin}${window.location.pathname}`
+    });
+}
+
 export function preload() {
     iframe.width = '1px';
     iframe.height = '1px';
@@ -107,6 +109,9 @@ export function show(id, style) {
 
 // file: { content: string, path: string, name: string, customW3cFragmentTextHash?: string }
 export function openFile(file) {
+    // need set document link before open file.
+    setDocumentLink();
+
     const message = {
         type: 'openFile',
         data: { ...file, customW3cFragmentTextHash: window.location.hash.startsWith(CUSTOM_W3C_FRAGMENT_TEXT_FLAG) ? window.location.hash : undefined }
