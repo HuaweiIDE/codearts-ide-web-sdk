@@ -170,3 +170,6 @@
 
 22. 设置编辑区文本是否自动换行，默认关闭
    `ide.setEditorWordWrap(wordWrap: boolean)`
+
+23. 搜索编辑区文本
+   `ide.searchText(text: string)`

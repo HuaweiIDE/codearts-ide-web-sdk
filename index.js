@@ -14,7 +14,7 @@ if (gitcodeOriginSuffix) {
 }
 const iframe = document.createElement('iframe');
 iframe.id = 'codeartside';
-iframe.src = hcOrigin + '/codearts-core-web-static/1.0.102/resources/server/gitcode.html';
+iframe.src = hcOrigin + '/codearts-core-web-static/1.0.103/resources/server/gitcode.html';
 
 const OS = getOS();
 const ON_DID_CHANGE = 'onDidChange';
@@ -245,6 +245,14 @@ export function setEditorWordWrap(wordWrap) {
     const message = {
         type: 'setEditorWordWrap',
         data: wordWrap
+    };
+    postMessage(message);
+}
+
+export function searchText(text) {
+    const message = {
+        type: 'searchText',
+        data: text
     };
     postMessage(message);
 }
